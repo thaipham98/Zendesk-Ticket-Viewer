@@ -21,7 +21,7 @@ pip install -r requirements.txt
 ```
 4. To run the application (user instructions available upon opening), enter:
 ```bash
-python src/main.py
+python3 src/main.py
 ```
 5. To run unit tests, enter:
 ```bash
