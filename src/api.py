@@ -12,7 +12,7 @@ URL = "https://zcc9334.zendesk.com/api/v2"
 LIMIT = 25
 
 def validate_response(response):
-    if response.status_code != 200:
+    if response.status_code == 500:
         raise HTTPError("Code {}, {}.".format(response.status_code, response.reason))
         
 def get_all_tickets():
