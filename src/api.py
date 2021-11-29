@@ -3,13 +3,18 @@ from requests.auth import HTTPBasicAuth
 import json
 import math
 
+from requests.models import HTTPError
+
 
 USER_NAME = "giathai1998@gmail.com"
 PASSWORD = "Se?ajTsavRCY7J!"
 URL = "https://zcc9334.zendesk.com/api/v2"
 LIMIT = 25
 
-
+def validate_response(response):
+    if response.status_code != 200:
+        raise HTTPError("Code {}, {}.".format(response.status_code, response.reason))
+        
 def get_all_tickets():
     """Function to obtain all tickets from HTTP requests.
     Returns:
@@ -22,6 +27,8 @@ def get_all_tickets():
         "{}/tickets?page={}".format(URL, page),
         auth=HTTPBasicAuth(USER_NAME, PASSWORD),
     )
+    
+    validate_response(response)
 
     parsed_response = json.loads(response.text)
     next_page = parsed_response["next_page"]
@@ -96,6 +103,9 @@ def get_ticket_detail(ticket_id):
         "{}/tickets/{}".format(URL, ticket_id),
         auth=HTTPBasicAuth(USER_NAME, PASSWORD),
     )
+    
+    validate_response(response)
+    
     parsed_response = json.loads(response.text)
 
     return parsed_response
